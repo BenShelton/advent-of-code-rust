@@ -1,8 +1,13 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // let file = include_str!("sample-input.txt");
+    let file_sample = include_str!("sample-input.txt");
     let file = include_str!("input.txt");
-    part_one(file)?;
-    part_two(file)?;
+
+    assert_eq!(part_one(file_sample)?, 3);
+    println!("Part One: {}", part_one(file)?);
+
+    assert_eq!(part_two(file_sample)?, 6);
+    println!("Part One: {}", part_two(file)?);
+
     Ok(())
 }
 
@@ -10,13 +15,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 struct DialResult {
     new_position: i32,
     /// Counts the number of times zero was _passed_ during the rotation.
-    zero_passes: i32,
+    zero_passes: u32,
 }
 
 fn rotate_dial(current: i32, line: &str) -> Result<DialResult, Box<dyn std::error::Error>> {
     let (dir, num) = line.trim().split_at(1);
     let num = num.parse::<i32>()?;
-    let mut zero_passes = num / 100;
+    let mut zero_passes: u32 = (num / 100) as u32;
     let num = num % 100;
     match dir {
         "R" => {
@@ -52,7 +57,7 @@ fn rotate_dial(current: i32, line: &str) -> Result<DialResult, Box<dyn std::erro
     }
 }
 
-fn part_one(file: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn part_one(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut current_dial: i32 = 50;
     let mut zero_count = 0;
@@ -65,14 +70,13 @@ fn part_one(file: &str) -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    println!("Part One: {zero_count}");
-    Ok(())
+    Ok(zero_count)
 }
 
-fn part_two(file: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn part_two(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut current_dial: i32 = 50;
-    let mut zero_count = 0;
+    let mut zero_count: u32 = 0;
 
     for line in lines {
         let result = rotate_dial(current_dial, line)?;
@@ -83,8 +87,7 @@ fn part_two(file: &str) -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    println!("Part Two: {zero_count}");
-    Ok(())
+    Ok(zero_count)
 }
 
 #[cfg(test)]
