@@ -1,12 +1,12 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let file_sample = include_str!("sample-input.txt");
-    let file = include_str!("input.txt");
+    let sample = include_str!("inputs/sample.txt");
+    let actual = include_str!("inputs/actual.txt");
 
-    assert_eq!(part_one(file_sample)?, 1227775554);
-    println!("Part One: {}", part_one(file)?);
+    assert_eq!(part_one(sample)?, 1227775554);
+    println!("Part One: {}", part_one(actual)?);
 
-    assert_eq!(part_two(file_sample)?, 4174379265);
-    println!("Part Two: {}", part_two(file)?);
+    assert_eq!(part_two(sample)?, 4174379265);
+    println!("Part Two: {}", part_two(actual)?);
 
     Ok(())
 }

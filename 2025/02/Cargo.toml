@@ -2,5 +2,3 @@
 name = "aoc-2025-02"
 version = "0.0.0"
 edition = "2024"
-
-[dependencies]
