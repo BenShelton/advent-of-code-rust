@@ -1,12 +1,12 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let sample = include_str!("inputs/sample.txt");
-    let actual = include_str!("inputs/actual.txt");
+    let sample = include_str!("data-sample.txt").trim();
+    let actual = include_str!("data-actual.txt").trim();
 
     assert_eq!(part_one(sample)?, 3);
     println!("Part One: {}", part_one(actual)?);
 
     assert_eq!(part_two(sample)?, 6);
-    println!("Part One: {}", part_two(actual)?);
+    println!("Part Two: {}", part_two(actual)?);
 
     Ok(())
 }
@@ -19,7 +19,7 @@ struct DialResult {
 }
 
 fn rotate_dial(current: i32, line: &str) -> Result<DialResult, Box<dyn std::error::Error>> {
-    let (dir, num) = line.trim().split_at(1);
+    let (dir, num) = line.split_at(1);
     let num = num.parse::<i32>()?;
     let mut zero_passes: u32 = (num / 100) as u32;
     let num = num % 100;

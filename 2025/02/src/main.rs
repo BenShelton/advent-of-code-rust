@@ -1,6 +1,6 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let sample = include_str!("inputs/sample.txt");
-    let actual = include_str!("inputs/actual.txt");
+    let sample = include_str!("data-sample.txt").trim();
+    let actual = include_str!("data-actual.txt").trim();
 
     assert_eq!(part_one(sample)?, 1227775554);
     println!("Part One: {}", part_one(actual)?);
@@ -12,8 +12,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
-    let line = file.trim();
-    let ids = line.split(',');
+    let ids = file.split(',');
     let mut total = 0;
     for id in ids {
         let (first_id, last_id) = id.split_once('-').unwrap();
@@ -34,8 +33,7 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
 }
 
 fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
-    let line = file.trim();
-    let ids = line.split(',');
+    let ids = file.split(',');
     let mut total = 0;
     for id in ids {
         let (first_id, last_id) = id.split_once('-').unwrap();
