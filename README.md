@@ -13,4 +13,7 @@ A non-`just` alternative is also provided.
 # Run a specific day's solution
 just run 2025 01
 cargo run --bin aoc-2025-01
+
+# Run every solution
+just run-all
 ```
