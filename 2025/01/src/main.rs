@@ -18,6 +18,7 @@ struct DialResult {
     zero_passes: u32,
 }
 
+#[allow(clippy::cast_sign_loss)]
 fn rotate_dial(current: i32, line: &str) -> Result<DialResult, Box<dyn std::error::Error>> {
     let (dir, num) = line.split_at(1);
     let num = num.parse::<i32>()?;

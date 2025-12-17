@@ -17,8 +17,8 @@ struct Range {
 }
 
 impl Range {
-    pub fn contains(&self, index: &u64) -> bool {
-        &self.start <= index && index <= &self.end
+    pub fn contains(&self, index: u64) -> bool {
+        self.start <= index && index <= self.end
     }
 
     pub fn count(&self) -> u64 {
@@ -26,6 +26,7 @@ impl Range {
     }
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut total: u64 = 0;
@@ -46,7 +47,7 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
                 ranges.push(Range { start, end });
             }
         } else if let Ok(index) = line.parse::<u64>()
-            && ranges.iter().any(|r| r.contains(&index))
+            && ranges.iter().any(|r| r.contains(index))
         {
             total += 1;
         }
@@ -55,6 +56,7 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     Ok(total)
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut total: u64 = 0;

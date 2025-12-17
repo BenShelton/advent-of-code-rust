@@ -157,6 +157,7 @@ fn segments_intersect(a1: &Tile, a2: &Tile, b1: &Tile, b2: &Tile) -> bool {
     (o1 > 0 && o2 < 0 || o1 < 0 && o2 > 0) && (o3 > 0 && o4 < 0 || o3 < 0 && o4 > 0)
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let tiles: Vec<Tile> = lines
@@ -174,9 +175,9 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let len = tiles.len();
     for i in 0..len {
         for j in (i + 1)..len {
-            let tile1 = tiles.get(i).unwrap();
-            let tile2 = tiles.get(j).unwrap();
-            let area = tile1.area(tile2);
+            let tile_a = tiles.get(i).unwrap();
+            let tile_b = tiles.get(j).unwrap();
+            let area = tile_a.area(tile_b);
             if area > largest {
                 largest = area;
             }
@@ -186,6 +187,7 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     Ok(largest)
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let tiles: Vec<Tile> = lines
@@ -203,12 +205,12 @@ fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let len = tiles.len();
     for i in 0..len {
         for j in (i + 1)..len {
-            let tile1 = tiles.get(i).unwrap();
-            let tile2 = tiles.get(j).unwrap();
+            let tile_a = tiles.get(i).unwrap();
+            let tile_b = tiles.get(j).unwrap();
 
-            let rect = Rect::from_points(tile1, tile2);
+            let rect = Rect::from_points(tile_a, tile_b);
             if rect.in_polygon(&tiles) {
-                let area = tile1.area(tile2);
+                let area = tile_a.area(tile_b);
                 if area > largest {
                     largest = area;
                 }

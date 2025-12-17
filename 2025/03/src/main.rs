@@ -5,12 +5,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!(part_one(sample)?, 357);
     println!("Part One: {}", part_one(actual)?);
 
-    assert_eq!(part_two(sample)?, 3121910778619);
+    assert_eq!(part_two(sample)?, 3_121_910_778_619);
     println!("Part Two: {}", part_two(actual)?);
 
     Ok(())
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut total: u32 = 0;
@@ -41,6 +42,7 @@ fn part_one(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     Ok(total)
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut total: u64 = 0;
@@ -59,7 +61,7 @@ fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
                     start_index = j + 1;
                 }
             }
-            line_total += highest_in_range as u64 * 10u64.pow(11 - i as u32);
+            line_total += u64::from(highest_in_range) * 10u64.pow(11 - u32::try_from(i).unwrap());
         }
 
         total += line_total;

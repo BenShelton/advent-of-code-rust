@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+#[allow(clippy::float_cmp)]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let sample = include_str!("data-sample.txt").trim();
     let actual = include_str!("data-actual.txt").trim();
@@ -7,7 +8,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!(part_one(sample, 10)?, 40);
     println!("Part One: {}", part_one(actual, 1000)?);
 
-    assert_eq!(part_two(sample)?, 25272f64);
+    assert_eq!(part_two(sample)?, 25_272_f64);
     println!("Part Two: {}", part_two(actual)?);
 
     Ok(())
@@ -78,6 +79,7 @@ impl Ord for Connection {
 
 type Circuit = u32;
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str, iterations: usize) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut boxes: Vec<JunctionBox> = lines
@@ -93,7 +95,7 @@ fn part_one(file: &str, iterations: usize) -> Result<u64, Box<dyn std::error::Er
                 x,
                 y,
                 z,
-                circuit: index as u32,
+                circuit: u32::try_from(index).unwrap(),
             }
         })
         .collect();
@@ -127,7 +129,7 @@ fn part_one(file: &str, iterations: usize) -> Result<u64, Box<dyn std::error::Er
         }
 
         if let Some((from, to)) = replacement_circuit {
-            for other in boxes.iter_mut() {
+            for other in &mut boxes {
                 if other.circuit == from {
                     other.circuit = to;
                 }
@@ -144,7 +146,7 @@ fn part_one(file: &str, iterations: usize) -> Result<u64, Box<dyn std::error::Er
     }
 
     let mut all_sizes: Vec<u64> = circuit_sizes.into_values().collect();
-    all_sizes.sort();
+    all_sizes.sort_unstable();
     let highest_three = all_sizes.iter().rev().take(3).product();
 
     Ok(highest_three)
@@ -165,7 +167,7 @@ fn part_two(file: &str) -> Result<f64, Box<dyn std::error::Error>> {
                 x,
                 y,
                 z,
-                circuit: index as u32,
+                circuit: u32::try_from(index).unwrap(),
             }
         })
         .collect();
@@ -197,7 +199,7 @@ fn part_two(file: &str) -> Result<f64, Box<dyn std::error::Error>> {
         }
 
         if let Some((from, to)) = replacement_circuit {
-            for other in boxes.iter_mut() {
+            for other in &mut boxes {
                 if other.circuit == from {
                     other.circuit = to;
                 }

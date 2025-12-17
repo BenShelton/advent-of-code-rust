@@ -2,10 +2,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let sample = include_str!("data-sample.txt").trim();
     let actual = include_str!("data-actual.txt").trim();
 
-    assert_eq!(part_one(sample)?, 4277556);
+    assert_eq!(part_one(sample)?, 4_277_556);
     println!("Part One: {}", part_one(actual)?);
 
-    assert_eq!(part_two(sample)?, 3263827);
+    assert_eq!(part_two(sample)?, 3_263_827);
     println!("Part Two: {}", part_two(actual)?);
 
     Ok(())
@@ -37,6 +37,7 @@ impl Problem {
     }
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
 
@@ -45,11 +46,11 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
         for section in line.split(' ') {
             if section.is_empty() {
                 continue;
-            };
+            }
             let problem = {
                 if acc.len() <= problem_index {
                     acc.push(Problem::new());
-                };
+                }
                 acc.get_mut(problem_index).unwrap()
             };
             match section {
@@ -59,7 +60,7 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
                     let n = n.parse::<u64>().unwrap();
                     problem.push(n);
                 }
-            };
+            }
             problem_index += 1;
         }
 
@@ -93,9 +94,7 @@ impl ColumnProblem {
     }
 
     pub fn set_operator(&mut self, c: char) {
-        if self.operator.is_some() {
-            panic!("Operator already set");
-        }
+        assert!(self.operator.is_none(), "Operator already set");
         self.operator = Some(c);
     }
 
@@ -111,6 +110,7 @@ impl ColumnProblem {
     }
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
     let mut columns: Vec<String> = lines.fold(Vec::new(), |mut acc, line| {
@@ -118,7 +118,7 @@ fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
             match acc.get_mut(index) {
                 Some(s) => s.push(char),
                 _ => acc.push(char.to_string()),
-            };
+            }
         }
         acc
     });

@@ -36,9 +36,9 @@ impl Beam {
         self.columns = self.next_columns.clone();
     }
 
-    pub fn split(&mut self, col: &usize) {
-        if self.columns.contains(col) {
-            self.next_columns.remove(col);
+    pub fn split(&mut self, col: usize) {
+        if self.columns.contains(&col) {
+            self.next_columns.remove(&col);
             self.next_columns.insert(col - 1);
             self.next_columns.insert(col + 1);
             self.splits += 1;
@@ -50,6 +50,7 @@ impl Beam {
     }
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
 
@@ -58,7 +59,7 @@ fn part_one(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
         for (col, char) in line.chars().enumerate() {
             match char {
                 'S' => beam.start(col),
-                '^' => beam.split(&col),
+                '^' => beam.split(col),
                 _ => {}
             }
         }
@@ -85,8 +86,8 @@ impl TimelineBeam {
         self.next_timelines.insert(col, 1);
     }
 
-    pub fn split(&mut self, col: &usize) {
-        if let Some(count) = self.timelines.get(col)
+    pub fn split(&mut self, col: usize) {
+        if let Some(count) = self.timelines.get(&col)
             && count > &0
         {
             self.next_timelines
@@ -97,7 +98,7 @@ impl TimelineBeam {
                 .entry(col + 1)
                 .and_modify(|c| *c += count)
                 .or_insert(*count);
-            self.next_timelines.insert(*col, 0);
+            self.next_timelines.insert(col, 0);
         }
     }
 
@@ -110,6 +111,7 @@ impl TimelineBeam {
     }
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let lines = file.lines();
 
@@ -118,7 +120,7 @@ fn part_two(file: &str) -> Result<u64, Box<dyn std::error::Error>> {
         for (col, char) in line.chars().enumerate() {
             match char {
                 'S' => beam.start(col),
-                '^' => beam.split(&col),
+                '^' => beam.split(col),
                 _ => {}
             }
         }

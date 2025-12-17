@@ -22,10 +22,10 @@ struct Grid {
 
 impl Grid {
     fn from_lines(lines: &mut Lines) -> Grid {
-        let line1 = lines.next().unwrap();
-        let width = line1.len();
+        let first_line = lines.next().unwrap();
+        let width = first_line.len();
         let mut height = 1;
-        let mut cells = line1.chars().collect::<Vec<char>>();
+        let mut cells = first_line.chars().collect::<Vec<char>>();
         for line in lines {
             height += 1;
             cells.extend(line.chars());
@@ -66,6 +66,7 @@ impl Grid {
     }
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_one(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let grid = Grid::from_lines(&mut file.lines());
     let mut total: u32 = 0;
@@ -87,6 +88,7 @@ fn part_one(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     Ok(total)
 }
 
+#[allow(clippy::unnecessary_wraps)]
 fn part_two(file: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let mut grid = Grid::from_lines(&mut file.lines());
     let mut total: u32 = 0;

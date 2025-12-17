@@ -2,10 +2,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let sample = include_str!("data-sample.txt").trim();
     let actual = include_str!("data-actual.txt").trim();
 
-    assert_eq!(part_one(sample)?, 1227775554);
+    assert_eq!(part_one(sample)?, 1_227_775_554);
     println!("Part One: {}", part_one(actual)?);
 
-    assert_eq!(part_two(sample)?, 4174379265);
+    assert_eq!(part_two(sample)?, 4_174_379_265);
     println!("Part Two: {}", part_two(actual)?);
 
     Ok(())
